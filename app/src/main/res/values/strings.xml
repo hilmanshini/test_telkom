@@ -1,0 +1,15 @@
+<resources>
+	<string name="app_name">TestHilman</string>
+	<string name="by_bla" formatted="false">by %s</string>
+	<string name="comments_bla" formatted="false">comments %d</string>
+	<string name="score_bla" formatted="false">score %d</string>
+	<string name="title_activity_feed">FeedActivity</string>
+	<string name="large_text">
+
+		"when a user tries to pick up one of cards.\n\n"
+	</string>
+	<string name="action_settings">Settings</string>
+	<string name="title_activity_scrolling">ScrollingActivity</string>
+	<string name="story_detail">Story Detail</string>
+
+</resources>

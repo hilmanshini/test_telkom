@@ -1,0 +1,98 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+
+apply plugin: 'kotlin-kapt'
+android {
+    compileSdkVersion 28
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        applicationId "id.co.telkom.testhilman"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    dataBinding {
+        enabled true
+    }
+}
+
+ext {
+    dagger2_version = '2.15'
+    versions = [
+            jacksonVersion: "2.9.6",
+            okHttp        : "3.12.2",
+            dagger        : "2.24"
+    ]
+    jacksonDeps = [
+            jacksonAnnotations: "com.fasterxml.jackson.core:jackson-annotations:${versions.jacksonVersion}",
+            jacksonCore       : "com.fasterxml.jackson.core:jackson-core:${versions.jacksonVersion}",
+            jacksonDataBind   : "com.fasterxml.jackson.core:jackson-databind:${versions.jacksonVersion}",
+    ]
+    okHttpDeps = [
+            okHttp            : "com.squareup.okhttp3:okhttp:${versions.okHttp}",
+            loggingInterceptor: "com.squareup.okhttp3:logging-interceptor:${versions.okHttp}"
+    ]
+    daggerDeps = [
+            dagger: "com.google.dagger:dagger:${versions.dagger}",
+
+    ]
+    daggerCompilerDeps = [
+            dagger_compiler: "com.google.dagger:dagger-compiler:${versions.dagger}"
+    ]
+    myFrameworkDeps = [
+            app      : 'com.hilman.tauba:app:1.0.4@aar',
+            env_utils: 'com.hilman.tauba:env_utilsv3:1.0.15@aar',
+            netmodule: 'com.hilman.tauba:network_module_v2:1.0.28@aar',
+            uimodule : 'com.hilman.tauba:uimodule_utils:1.0.71@aar'
+    ]
+
+
+    networkLibs = okHttpDeps.values()
+    jacksonLibs = jacksonDeps.values()
+    daggerLibs = daggerDeps.values()
+    daggerCompilerLibs = daggerCompilerDeps.values()
+    myFrameworkLibs = myFrameworkDeps.values()
+}
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'id.co.telkom:test:1.9'
+    implementation 'com.google.android.material:material:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    api networkLibs
+    api jacksonLibs
+
+    api myFrameworkLibs
+
+
+    implementation 'androidx.recyclerview:recyclerview:1.1.0-beta04'
+    implementation 'androidx.cardview:cardview:1.0.0'
+
+
+    // dependency injection
+    implementation "com.google.dagger:dagger:$dagger2_version"
+    implementation "com.google.dagger:dagger-android:$dagger2_version"
+    implementation "com.google.dagger:dagger-android-support:$dagger2_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger2_version"
+    annotationProcessor "com.google.dagger:dagger-compiler:$dagger2_version"
+    compileOnly 'javax.annotation:jsr250-api:1.0'
+    implementation 'javax.inject:javax.inject:1'
+}

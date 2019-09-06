@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:app="http://schemas.android.com/apk/res-auto"
+		xmlns:tools="http://schemas.android.com/tools"
+>
+	<data>
+		<variable name="feed" type="hackernews.api.entity.Feed"/>
+		<variable name="act" type="id.co.telkom.testhilman.FeedActivity"/>
+		<import type="id.co.telkom.testhilman.module.DateFormatter"/>
+	</data>
+	<androidx.coordinatorlayout.widget.CoordinatorLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:fitsSystemWindows="true"
+			tools:context=".FeedActivity">
+
+		<com.google.android.material.appbar.AppBarLayout
+				android:id="@+id/app_bar"
+				android:layout_width="match_parent"
+				android:layout_height="@dimen/app_bar_height"
+				android:fitsSystemWindows="true"
+				android:theme="@style/AppTheme.AppBarOverlay">
+
+			<com.google.android.material.appbar.CollapsingToolbarLayout
+					android:id="@+id/toolbar_layout"
+					android:layout_width="match_parent"
+					android:layout_height="match_parent"
+					android:fitsSystemWindows="true"
+					app:contentScrim="?attr/colorPrimary"
+					app:layout_scrollFlags="scroll|exitUntilCollapsed"
+					app:toolbarId="@+id/toolbar">
+
+				<androidx.appcompat.widget.Toolbar
+						android:id="@+id/toolbar"
+						android:layout_width="match_parent"
+						android:layout_height="?attr/actionBarSize"
+						app:layout_collapseMode="pin"
+						app:title="@string/story_detail"
+						app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+			</com.google.android.material.appbar.CollapsingToolbarLayout>
+		</com.google.android.material.appbar.AppBarLayout>
+
+		<androidx.core.widget.NestedScrollView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				app:layout_behavior="@string/appbar_scrolling_view_behavior"
+				tools:context=".FeedActivity"
+				tools:showIn="@layout/activity_feed">
+			<RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent"
+							android:paddingTop="40dp"
+
+			>
+
+				<TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+						  android:text="@{feed.title}"
+						  android:gravity="center"
+						  android:id="@+id/title"
+						  android:textSize="16sp"
+
+
+				/>
+				<TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+						  android:text="@{@string/by_bla(feed.by)}"
+						  android:gravity="center"
+						  android:id="@+id/by"
+						  android:layout_marginTop="20dp"
+						  android:layout_below="@+id/title"
+						  android:textSize="16sp"
+
+
+				/>
+				<TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+						  android:text="@{DateFormatter.reformatDate(feed)}"
+						  android:gravity="center"
+						  android:id="@+id/desc"
+						  android:layout_marginTop="20dp"
+						  android:layout_below="@+id/by"
+						  android:textSize="16sp"
+
+
+				/>
+				<TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+						  android:text="@{feed.text}"
+						  android:gravity="center"
+						  android:id="@+id/text"
+						  android:layout_marginTop="20dp"
+						  android:layout_below="@+id/desc"
+						  android:textSize="16sp"
+
+
+				/>
+
+				<androidx.recyclerview.widget.RecyclerView android:layout_width="match_parent"
+														   android:layout_below="@+id/text"
+														   android:id="@+id/recycler"
+														   app:layout_behavior="@string/appbar_scrolling_view_behavior"
+														   android:layout_height="match_parent">
+
+				</androidx.recyclerview.widget.RecyclerView>
+
+
+			</RelativeLayout>
+
+		</androidx.core.widget.NestedScrollView>
+
+		<com.google.android.material.floatingactionbutton.FloatingActionButton
+				android:id="@+id/fab"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="@dimen/fab_margin"
+				app:layout_anchor="@id/app_bar"
+				app:setOnClickListener="@{()->{act.toggleFavorite()}}"
+				app:layout_anchorGravity="bottom|end"
+
+				app:srcCompat="@{feed.favorite ? @drawable/ic_star_black_24dp : @drawable/ic_star_border_black_24dp}"/>
+
+	</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

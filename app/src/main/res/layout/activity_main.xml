@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		xmlns:tools="http://schemas.android.com/tools"
+>
+	<data>
+		<variable name="state" type="Integer"/>
+		<import type="android.view.View"/>
+		<import type="id.co.telkom.testhilman.MainActivity" alias="m"/>
+	</data>
+	<RelativeLayout
+			
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			tools:context=".MainActivity">
+		
+		<ImageView android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:src="@drawable/ic_signal_wifi_off_black_24dp"
+		           android:visibility="@{state == m.ERROR?View.VISIBLE:View.GONE}"
+		           android:layout_centerInParent="true"
+		
+		/>
+		<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+				android:layout_width="match_parent"
+				android:id="@+id/swipeRefresh"
+				android:visibility="@{state == m.NO_ERROR?View.VISIBLE:View.GONE}"
+				android:layout_height="match_parent">
+			<androidx.recyclerview.widget.RecyclerView
+					android:layout_width="match_parent"
+					android:id="@+id/recycler"
+					android:layout_height="match_parent">
+			
+			</androidx.recyclerview.widget.RecyclerView>
+		
+		
+		</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+		<ProgressBar
+				android:layout_width="match_parent"
+				style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+				android:layout_alignParentTop="true"
+				android:indeterminate="true"
+				android:visibility="@{state == m.LOADING ? View.VISIBLE:View.GONE}"
+				android:layout_centerInParent="true"
+				android:layout_height="wrap_content"/>
+	</RelativeLayout>
+</layout>
